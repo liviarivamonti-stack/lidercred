@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+const authMiddleware = require('../middleware/auth');
+const { getRanking, addSale, getMySales, getAllSales } = require('../controllers/salesController');
+router.use((req, res, next) => { req.io = req.app.get('io'); next(); });
+router.get('/ranking', authMiddleware, getRanking);
+router.post('/', authMiddleware, addSale);
+router.get('/mine', authMiddleware, getMySales);
+router.get('/history', authMiddleware, getAllSales);
+module.exports = router;
